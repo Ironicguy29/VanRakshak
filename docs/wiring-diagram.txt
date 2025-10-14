@@ -1,0 +1,93 @@
+```
+                    The Guardian Band - ESP32 Wiring Diagram
+                              
+                            ESP32 DEVKIT C
+                   ┌─────────────────────────────────┐
+                   │                               │
+    [LiPo+] ───────┤VIN                        3V3├──── [VCC - All Sensors]
+    [LiPo-] ───────┤GND                        GND├──── [GND - All Sensors]
+                   │                               │
+                   │              ┌─ I2C BUS ─┐   │
+                   │              │           │   │
+    [GPS] ─────────┤16-RX    21-SDA├───────────┼───┤──── [MPU6050-SDA]
+          NEO6M-TX │              │           │   │      [MAX30102-SDA]
+                   │              │           │   │
+    [GPS] ─────────┤17-TX    22-SCL├───────────┼───┤──── [MPU6050-SCL]
+          NEO6M-RX │              │           │   │      [MAX30102-SCL]
+                   │              └───────────┘   │
+                   │                               │
+    [SIM7000] ─────┤26-RX                      4 ├──── [DS18B20-DATA]
+           TX→RX   │                               │      + 4.7kΩ pullup
+                   │                               │
+    [SIM7000] ─────┤27-TX                         │
+           RX←TX   │                               │
+                   │                               │
+                   └─────────────────────────────────┘
+
+EXTERNAL COMPONENTS:
+
+┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
+│    SIM800L      │  │     NEO-6M      │  │    DS18B20      │
+│   Cellular      │  │      GPS        │  │  Temperature    │
+│                 │  │                 │  │                 │
+│ VCC ──── BATT   │  │ VCC ──── 3.3V   │  │ VCC ──── 3.3V   │
+│ GND ──── GND    │  │ GND ──── GND    │  │ GND ──── GND    │
+│ TX  ──── G26    │  │ TX  ──── G16    │  │ DAT ──── G4     │
+│ RX  ──── G27    │  │ RX  ──── G17    │  │                 │
+│ ANT ──── Ext    │  │                 │  │ [4.7kΩ pullup]  │
+└─────────────────┘  └─────────────────┘  └─────────────────┘
+
+┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
+│     GY-61       │  │   MAX30102      │  │    TP4056       │
+│ Accel (ADXL335) │  │  Heart Rate     │  │   Charger       │
+│                 │  │   (Optional)    │  │                 │
+│ VCC ──── 3.3V   │  │ VCC ──── 3.3V   │  │ B+ ──── LiPo+   │
+│ GND ──── GND    │  │ GND ──── GND    │  │ B- ──── LiPo-   │
+│ X   ──── G34    │  │ SDA ──── G21    │  │ OUT+ ─── N/C    │
+│ Y   ──── G35    │  │ SCL ──── G22    │  │ OUT- ─── N/C    │
+│ Z   ──── G32    │  │                 │  │ IN+ ──── Solar+ │
+└─────────────────┘  └─────────────────┘  └─────────────────┘
+
+POWER DISTRIBUTION:
+                     ┌─────────────┐
+    Solar Panel ────┤             │
+    (Optional 6V)   │   TP4056    ├──── ESP32 VIN (3.3-5V)
+                    │  Charger    │
+    LiPo Battery ───┤             ├──── ESP32 GND
+    (3.7V 3-6Ah)    │             │
+                    └─────────────┘
+                          │
+                          └─────────── All Sensor VCC (3.3V)
+
+UART CONFIGURATIONS:
+• GPS (NEO-6M):     9600 baud,   8N1, GPIO 16/17
+• Cellular (SIM800L): 9600 baud, 8N1, GPIO 26/27
+• Debug Serial:     115200 baud, USB
+
+ADC CHANNELS (GY-61):
+• X-axis: GPIO 34 (ADC1_CH6)
+• Y-axis: GPIO 35 (ADC1_CH7) 
+• Z-axis: GPIO 32 (ADC1_CH4)
+
+I2C ADDRESSES (Optional):
+• MAX30102: 0x57
+
+ANTENNA REQUIREMENTS:
+• GPS: Active patch antenna (built-in or external)
+• Cellular: External antenna matched to frequency bands
+• Separation: Keep antennas >5cm apart to avoid interference
+
+COLLAR ENCLOSURE CONSIDERATIONS:
+┌─────────────────────────────────┐
+│  [ GPS ANT ]    [ CELL ANT ]    │ ← External antennas
+│                                 │
+│  ┌─────────────────────────────┐ │
+│  │        ESP32 + Sensors      │ │ ← Main PCB
+│  └─────────────────────────────┘ │
+│                                 │
+│  ┌───────────┐ ┌─────────────┐   │
+│  │  Battery  │ │  Charging   │   │ ← Power components
+│  │  (LiPo)   │ │   (TP4056)  │   │
+│  └───────────┘ └─────────────┘   │
+└─────────────────────────────────┘
+```

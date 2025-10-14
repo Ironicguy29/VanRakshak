@@ -1,0 +1,20 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Server: dev",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "dev"],
+      "options": { "cwd": "${workspaceFolder}/server" },
+      "problemMatcher": ["$tsc"]
+    },
+    {
+      "label": "Simulator: run",
+      "type": "shell",
+      "command": "python",
+      "args": ["simulate.py", "--animalId", "GB-sim-0001"],
+      "options": { "cwd": "${workspaceFolder}/simulator" }
+    }
+  ]
+}
