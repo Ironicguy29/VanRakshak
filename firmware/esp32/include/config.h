@@ -45,7 +45,7 @@
 // =============================================================================
 
 // APN Settings - Configure for your cellular carrier
-#define APN "your.apn.here"     // Replace with carrier APN (e.g., "internet", "iot.1nce.net")
+#define APN "airtelgprs.com"    // Airtel India APN (also try "www" if this doesn't work)
 #define APN_USER ""             // Usually empty for most carriers
 #define APN_PASS ""             // Usually empty for most carriers
 
@@ -59,7 +59,7 @@
 // SERVER CONFIGURATION  
 // =============================================================================
 
-#define SERVER_HOST "10.0.2.2"     // Server IP or domain name
+#define SERVER_HOST "192.168.0.177"  // Your local PC IP address (Wi-Fi 2)
 #define SERVER_PORT 3000           // Server port number
 #define SERVER_PATH "/api/v1/ingest" // API endpoint path
 

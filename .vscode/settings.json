@@ -1,0 +1,5 @@
+{
+    "files.trimTrailingWhitespace": true,
+    "editor.trimAutoWhitespace": true,
+    "python.linting.flake8Args": ["--ignore=E501"]
+}
